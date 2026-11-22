@@ -8,11 +8,12 @@ const searchButton = document.getElementById("searchButton");
 const cityName = document.getElementById("cityName");
 
 searchButton.addEventListener("click", function () {
-    const city = cityInput.value;
-     if (city == "") {
+    const city = cityInput.value.trim();
+    if (city == "") {
         alert("Please enter a city name");
 
     } else {
-        cityName.innerHTML = city;
+        cityName.innerHTML = city.charAt(0).toUpperCase() + city.slice(1);
     }
 });
+
