@@ -108,3 +108,59 @@ p {
     font-size: 18px;
     font-weight: bold;
 }
+
+.section-title {
+    color: rgb(17, 24, 39);
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.hourly-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgb(229, 231, 235);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.hourly-card p {
+    color: dimgray;
+    font-size: 13px;
+}
+
+.hourly-card h3 {
+    font-size: 25px;
+    margin: 10px 0;
+}
+
+.hourly-card h5 {
+    color: royalblue;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.forecast-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid rgb(229, 231, 235);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.forecast-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5px;
+    border-bottom: 1px solid rgb(229, 231, 235);
+}
+
+.forecast-item:last-child {
+    border-bottom: none;
+}
+
+.forecast-item span {
+    color: rgb(17, 24, 39);
+    font-size: 14px;
+}
