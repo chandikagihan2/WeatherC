@@ -164,3 +164,22 @@ p {
     color: rgb(17, 24, 39);
     font-size: 14px;
 }
+
+.sun-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid lightgray;
+    text-align: center;
+}
+
+.sun-card h5 {
+    color:dimgray;
+    font-size: 16px;
+}
+
+.sun-card h4 {
+    color: royalblue;
+    font-size: 20px;
+    font-weight: bold;
+}
