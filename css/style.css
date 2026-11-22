@@ -51,5 +51,60 @@ p {
     background-color: darkblue;
     border-color: darkblue;
 }
--------------------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------*/
+/* Main Weather Card */
+.weather-card {
+    background-color: white;
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid lightgrey;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
 
+.weather-card h2 {
+    color: rgb(17, 24, 39);
+    font-size: 26px;
+    font-weight: bold;
+}
+
+
+.weather-date {
+    color: dimgray;
+    font-size: 14px;
+}
+
+
+.weather-icon {
+    font-size: 65px;
+    margin-top: 15px;
+}
+
+.temperature {
+    /* Royal Blue */
+    color: royalblue;
+    font-size: 55px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.weather-condition {
+    color: rgb(17, 24, 39);
+    font-size: 24px;
+}
+
+.weather-description {
+    color: dimgray;
+    font-size: 15px;
+}
+
+.weather-card h5 {
+    color: dimgray;
+    font-size: 14px;
+}
+
+.weather-card .col-4 p {
+    color: royalblue;
+    font-size: 18px;
+    font-weight: bold;
+}
