@@ -17,3 +17,9 @@ searchButton.addEventListener("click", function () {
     }
 });
 
+cityInput.addEventListener("keydown", function(event) {
+    if (event.key == "Enter") {
+        searchButton.click();
+    }
+});
+
