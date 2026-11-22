@@ -183,3 +183,21 @@ p {
     font-size: 20px;
     font-weight: bold;
 }
+/*.............*/
+.weather-footer {
+    background-color: rgb(17, 24, 39);
+    color:white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+.weather-footer h3 {
+    color: white;
+    font-size: 24px;
+}
+
+.weather-footer p {
+    color: lightgray;
+    font-size: 14px;
+}
