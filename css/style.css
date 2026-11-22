@@ -201,3 +201,41 @@ p {
     color: lightgray;
     font-size: 14px;
 }
+
+
+/* Mobile Screen Design */
+@media screen and (max-width: 576px) {
+
+    /* Main Weather Card */
+    .weather-card {
+        padding: 15px;
+    }
+
+    .temperature {
+        font-size: 40px;
+    }
+
+    .section-title {
+        font-size: 19px;
+    }
+
+    .hourly-card {
+        padding: 10px 5px;
+    }
+
+    .hourly-card h3 {
+        font-size: 20px;
+    }
+
+    .hourly-card h5 {
+        font-size: 12px;
+    }
+
+    .forecast-item span {
+        font-size: 12px;
+    }
+
+    .sun-card {
+        padding: 15px 5px;
+    }
+}
