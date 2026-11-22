@@ -206,7 +206,6 @@ p {
 /* Mobile Screen Design */
 @media screen and (max-width: 576px) {
 
-    /* Main Weather Card */
     .weather-card {
         padding: 15px;
     }
