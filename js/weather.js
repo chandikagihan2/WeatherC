@@ -1,91 +1,122 @@
+
 console.log("WeatherC App Started!");
 
-fetch("https://api.open-meteo.com/v1/forecast?latitude=6.9271&longitude=79.8612&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&timezone=Asia%2FColombo")
+function getWeather(city) {
 
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        const temperature = data.current.temperature_2m;
-        const humidity = data.current.relative_humidity_2m;
-        const windSpeed = data.current.wind_speed_10m;
+    fetch("https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(city) + "&count=1&language=en&format=json")
 
-        const weatherCode = data.current.weather_code;
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Location search failed");
+            }
 
-        let condition = "";
-        let description = "";
-        let icon = "";
+            return response.json();
+        })
 
-        if (weatherCode == 0) {
+        .then(function (locationData) {
 
-            condition = "Sunny";
-            description = "Clear sky";
-            icon = "☀️";
+            if (!locationData.results || locationData.results.length == 0) {
+                throw new Error("City not found. Please try another city.");
+            }
 
-        } else if (weatherCode == 1 || weatherCode == 2) {
+            const location = locationData.results[0];
 
-            condition = "Partly Cloudy";
-            description = "Some clouds in the sky";
-            icon = "🌤️";
+            const latitude = location.latitude;
+            const longitude = location.longitude;
 
-        } else if (weatherCode == 3) {
+            return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + latitude + "&longitude=" + longitude + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&timezone=auto")
 
-            condition = "Cloudy";
-            description = "Overcast sky";
-            icon = "☁️";
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error("Weather data could not be loaded");
+                    }
 
-        } else if (weatherCode == 45 || weatherCode == 48) {
+                    return response.json();
+                })
 
-            condition = "Foggy";
-            description = "Foggy weather";
-            icon = "🌫️";
+                .then(function (data) {
 
-        } else if (weatherCode >= 51 && weatherCode <= 67) {
+                    const temperature = data.current.temperature_2m;
+                    const humidity = data.current.relative_humidity_2m;
+                    const windSpeed = data.current.wind_speed_10m;
+                    const feelsLike = data.current.apparent_temperature;
 
-            condition = "Rainy";
-            description = "Rain or drizzle";
-            icon = "🌧️";
+                    const weatherCode = data.current.weather_code;
 
-        } else if (weatherCode >= 71 && weatherCode <= 77) {
+                    let condition = "";
+                    let description = "";
+                    let icon = "";
 
-            condition = "Snowy";
-            description = "Snow is falling";
-            icon = "❄️";
+                    if (weatherCode == 0) {
+                        condition = "Sunny";
+                        description = "Clear sky";
+                        icon = "☀️";
 
-        } else if (weatherCode >= 80 && weatherCode <= 82) {
+                    } else if (weatherCode == 1 || weatherCode == 2) {
+                        condition = "Partly Cloudy";
+                        description = "Some clouds in the sky";
+                        icon = "🌤️";
 
-            condition = "Rainy";
-            description = "Rain showers";
-            icon = "🌧️";
+                    } else if (weatherCode == 3) {
+                        condition = "Cloudy";
+                        description = "Overcast sky";
+                        icon = "☁️";
 
-        } else if (weatherCode == 85 || weatherCode == 86) {
+                    } else if (weatherCode == 45 || weatherCode == 48) {
+                        condition = "Foggy";
+                        description = "Foggy weather";
+                        icon = "🌫️";
 
-            condition = "Snowy";
-            description = "Snow showers";
-            icon = "❄️";
+                    } else if (weatherCode >= 51 && weatherCode <= 67) {
+                        condition = "Rainy";
+                        description = "Rain or drizzle";
+                        icon = "🌧️";
 
-        } else if (weatherCode >= 95 && weatherCode <= 99) {
+                    } else if (weatherCode >= 71 && weatherCode <= 77) {
+                        condition = "Snowy";
+                        description = "Snow is falling";
+                        icon = "❄️";
 
-            condition = "Thunderstorm";
-            description = "Thunderstorm in the area";
-            icon = "⛈️";
+                    } else if (weatherCode >= 80 && weatherCode <= 82) {
+                        condition = "Rainy";
+                        description = "Rain showers";
+                        icon = "🌧️";
 
-        } else {
+                    } else if (weatherCode == 85 || weatherCode == 86) {
+                        condition = "Snowy";
+                        description = "Snow showers";
+                        icon = "❄️";
 
-            condition = "Unknown";
-            description = "Weather information unavailable";
-            icon = "🌤️";
+                    } else if (weatherCode >= 95 && weatherCode <= 99) {
+                        condition = "Thunderstorm";
+                        description = "Thunderstorm in the area";
+                        icon = "⛈️";
 
-        }
+                    } else {
+                        condition = "Unknown";
+                        description = "Weather information unavailable";
+                        icon = "🌤️";
+                    }
 
+                    document.getElementById("cityName").innerHTML = location.name + ", " + location.country;
 
-        document.getElementById("temperature").innerHTML = temperature + "°C";
-        document.getElementById("humidity").innerHTML = humidity + "%";
-        document.getElementById("windSpeed").innerHTML = windSpeed + " km/h";
-        document.getElementById("feelsLike").innerHTML = data.current.apparent_temperature + "°C";
+                    document.getElementById("temperature").innerHTML = temperature + "°C";
+                    document.getElementById("humidity").innerHTML = humidity + "%";
+                    document.getElementById("windSpeed").innerHTML = windSpeed + " km/h";
+                    document.getElementById("feelsLike").innerHTML = feelsLike + "°C";
 
-        document.getElementById("weatherCondition").innerHTML = condition;
-        document.getElementById("weatherDescription").innerHTML = description;
-        document.getElementById("weatherIcon").innerHTML = icon;
-        console.log(data);
-    });
+                    document.getElementById("weatherCondition").innerHTML = condition;
+                    document.getElementById("weatherDescription").innerHTML = description;
+                    document.getElementById("weatherIcon").innerHTML = icon;
+
+                    console.log(data);
+                });
+        })
+
+        .catch(function (error) {
+            alert(error.message);
+            console.log(error);
+        });
+}
+
+getWeather("Colombo");
