@@ -27,13 +27,13 @@ h1{
 }
 
 h1 {
-    color: rgb(17, 24, 39);
+    color: rgb(238, 240, 243);
     font-size: 32px;
     font-weight: bold;
 }
 
 p {
-    color: rgb(105, 105, 105);
+    color: rgb(244, 243, 243);
     font-size: 16px;
 }
 
@@ -141,7 +141,7 @@ p {
 }
 
 .forecast-card {
-    background-color: white;
+    background-color: rgb(26, 20, 83);
     padding: 15px;
     border-radius: 15px;
     border: 1px solid rgb(229, 231, 235);
@@ -161,7 +161,7 @@ p {
 }
 
 .forecast-item span {
-    color: rgb(17, 24, 39);
+    color: rgb(220, 222, 227);
     font-size: 14px;
 }
 
@@ -238,3 +238,40 @@ p {
         padding: 15px 5px;
     }
 }
+
+
+body {
+    background: linear-gradient(
+        -45deg,
+        royalblue,
+        indigo,
+        purple,
+        darkblue
+    );
+
+    background-size: 400% 400%;
+    animation: gradientAnimation 12s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+header {
+    background: linear-gradient(
+        90deg,
+        royalblue,
+        purple
+    );
+}
+
