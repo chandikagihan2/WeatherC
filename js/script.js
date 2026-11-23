@@ -22,3 +22,14 @@ cityInput.addEventListener("keydown", function (event) {
         searchButton.click();
     }
 });
+
+const currentDate = new Date();
+
+const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+};
+
+document.getElementById("currentDate").innerHTML = currentDate.toLocaleDateString("en-US", dateOptions);
