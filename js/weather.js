@@ -123,6 +123,12 @@ function getWeather(city) {
                     });
 
                     if (currentIndex == -1) {
+                        currentIndex = hourlyTime.findIndex(function (time) {
+                            return time >= data.current.time;
+                        });
+                    }
+
+                    if (currentIndex == -1) {
                         currentIndex = 0;
                     }
 
