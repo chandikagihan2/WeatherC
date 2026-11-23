@@ -12,7 +12,8 @@ fetch("https://api.open-meteo.com/v1/forecast?latitude=6.9271&longitude=79.8612&
 
 
         document.getElementById("temperature").innerHTML = temperature + "°C";
-        document.getElementById("humidity").nextSibling.nodeValue = humidity + "%";
-        document.getElementById("windSpeed").nextSibling.nodeValue = windSpeed + " km/h";
+        document.getElementById("humidity").innerHTML = humidity + "%";
+        document.getElementById("windSpeed").innerHTML = windSpeed + " km/h";
+        document.getElementById("feelsLike").innerHTML = data.current.apparent_temperature + "°C";
         console.log(data);
     });
