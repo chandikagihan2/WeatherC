@@ -113,11 +113,14 @@ function getWeather(city) {
                     document.getElementById("weatherIcon").innerHTML = icon;
 
 
+
                     const hourlyTime = data.hourly.time;
                     const hourlyTemperature = data.hourly.temperature_2m;
                     const hourlyWeatherCode = data.hourly.weather_code;
 
-                    let currentIndex = hourlyTime.indexOf(data.current.time);
+                    let currentIndex = hourlyTime.findIndex(function (time) {
+                        return time.substring(0, 13) == data.current.time.substring(0, 13);
+                    });
 
                     if (currentIndex == -1) {
                         currentIndex = 0;
@@ -125,17 +128,21 @@ function getWeather(city) {
 
                     let hourlyHTML = "";
 
-                    for (let i = currentIndex; i < currentIndex + 4; i++) {
+                    for (let i = currentIndex; i < Math.min(currentIndex + 4, hourlyTime.length); i++) {
 
                         const time = hourlyTime[i];
-                        const temperature = hourlyTemperature[i];
-                        const weatherCode = hourlyWeatherCode[i];
+
+                        let temperature = hourlyTemperature[i];
+                        let weatherCode = hourlyWeatherCode[i];
 
                         let hour = Number(time.split("T")[1].split(":")[0]);
                         let displayTime = "";
 
                         if (i == currentIndex) {
                             displayTime = "Now";
+                            temperature = data.current.temperature_2m;
+                            weatherCode = data.current.weather_code;
+
                         } else {
 
                             let period = "AM";
@@ -191,6 +198,7 @@ function getWeather(city) {
                     }
 
                     document.getElementById("hourlyForecast").innerHTML = hourlyHTML;
+
 
                     const dailyTime = data.daily.time;
                     const dailyWeatherCode = data.daily.weather_code;
