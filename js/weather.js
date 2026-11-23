@@ -6,5 +6,8 @@ fetch("https://api.open-meteo.com/v1/forecast?latitude=6.9271&longitude=79.8612&
         return response.json();
     })
     .then(function (data) {
+        const temperature = data.current.temperature_2m;
+        document.getElementById("temperature").innerHTML = temperature + "°C";
         console.log(data);
     });
+    
