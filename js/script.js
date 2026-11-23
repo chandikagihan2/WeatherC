@@ -14,6 +14,7 @@ searchButton.addEventListener("click", function () {
 
     } else {
         cityName.innerHTML = city.charAt(0).toUpperCase() + city.slice(1);
+        cityInput.value = "";
     }
 });
 
@@ -22,4 +23,3 @@ cityInput.addEventListener("keydown", function(event) {
         searchButton.click();
     }
 });
-
