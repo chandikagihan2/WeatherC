@@ -3,8 +3,7 @@ console.log("WeatherC App Started!");
 
 function getWeather(city) {
 
-    fetch("https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(city) + "&count=1&language=en&format=json")
-
+    fetch("https://nominatim.openstreetmap.org/search?q=" + encodeURIComponent(city) + "&format=jsonv2&limit=1&addressdetails=1&accept-language=en")
         .then(function (response) {
             if (!response.ok) {
                 throw new Error("Location search failed");
@@ -15,17 +14,22 @@ function getWeather(city) {
 
         .then(function (locationData) {
 
-            if (!locationData.results || locationData.results.length == 0) {
-                throw new Error("City not found. Please try another city.");
+            if (!locationData || locationData.length == 0) {
+                throw new Error("Location not found. Please try another location.");
             }
 
-            const location = locationData.results[0];
+            const location = locationData[0];
 
-            const latitude = location.latitude;
-            const longitude = location.longitude;
+            const latitude = Number(location.lat);
+            const longitude = Number(location.lon);
 
-            return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + latitude + "&longitude=" + longitude + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&timezone=auto")
+            const locationName = location.name || location.display_name.split(",")[0];
 
+            const countryName = location.address && location.address.country
+                ? location.address.country
+                : "";
+
+            return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + latitude + "&longitude=" + longitude + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto")
                 .then(function (response) {
                     if (!response.ok) {
                         throw new Error("Weather data could not be loaded");
@@ -98,8 +102,7 @@ function getWeather(city) {
                         icon = "🌤️";
                     }
 
-                    document.getElementById("cityName").innerHTML = location.name + ", " + location.country;
-
+                    document.getElementById("cityName").innerHTML = locationName + ", " + countryName;
                     document.getElementById("temperature").innerHTML = temperature + "°C";
                     document.getElementById("humidity").innerHTML = humidity + "%";
                     document.getElementById("windSpeed").innerHTML = windSpeed + " km/h";
@@ -180,7 +183,7 @@ function getWeather(city) {
                             hourlyIcon = "⛈️";
                         }
 
-                    hourlyHTML += `<div class="col-3">
+                        hourlyHTML += `<div class="col-3">
                         <p>${displayTime}</p>
                         <h3>${hourlyIcon}</h3>
                         <h5>${temperature}°C</h5>
@@ -189,6 +192,80 @@ function getWeather(city) {
 
                     document.getElementById("hourlyForecast").innerHTML = hourlyHTML;
 
+                    const dailyTime = data.daily.time;
+                    const dailyWeatherCode = data.daily.weather_code;
+                    const dailyMax = data.daily.temperature_2m_max;
+                    const dailyMin = data.daily.temperature_2m_min;
+
+                    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+                    let dailyHTML = "";
+
+                    for (let i = 0; i < 5; i++) {
+
+                        const dateParts = dailyTime[i].split("-");
+                        const date = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
+
+                        const dayName = dayNames[date.getDay()];
+                        const weatherCode = dailyWeatherCode[i];
+
+                        let dailyIcon = "🌤️";
+
+                        if (weatherCode == 0) {
+                            dailyIcon = "☀️";
+
+                        } else if (weatherCode == 1 || weatherCode == 2) {
+                            dailyIcon = "🌤️";
+
+                        } else if (weatherCode == 3) {
+                            dailyIcon = "☁️";
+
+                        } else if (weatherCode == 45 || weatherCode == 48) {
+                            dailyIcon = "🌫️";
+
+                        } else if (weatherCode >= 51 && weatherCode <= 67) {
+                            dailyIcon = "🌧️";
+
+                        } else if (weatherCode >= 71 && weatherCode <= 77) {
+                            dailyIcon = "❄️";
+
+                        } else if (weatherCode >= 80 && weatherCode <= 82) {
+                            dailyIcon = "🌧️";
+
+                        } else if (weatherCode == 85 || weatherCode == 86) {
+                            dailyIcon = "❄️";
+
+                        } else if (weatherCode >= 95 && weatherCode <= 99) {
+                            dailyIcon = "⛈️";
+                        }
+
+                        dailyHTML += `<div class="forecast-item">
+                    <span>${dayName}</span>
+                    <span>${dailyIcon}</span>
+                    <span>${dailyMax[i]}°C / ${dailyMin[i]}°C</span>
+                </div>`;
+                    }
+
+                    document.getElementById("dailyForecast").innerHTML = dailyHTML;
+                    const sunrise = data.daily.sunrise[0];
+                    const sunset = data.daily.sunset[0];
+
+                    const sunriseDate = new Date(sunrise);
+                    const sunsetDate = new Date(sunset);
+
+                    document.getElementById("sunriseTime").innerHTML =
+                        sunriseDate.toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                            hour12: true
+                        });
+
+                    document.getElementById("sunsetTime").innerHTML =
+                        sunsetDate.toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                            hour12: true
+                        });
 
                     console.log(data);
                 });
