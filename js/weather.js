@@ -24,7 +24,7 @@ function getWeather(city) {
             const latitude = location.latitude;
             const longitude = location.longitude;
 
-            return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + latitude + "&longitude=" + longitude + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&timezone=auto")
+            return fetch("https://api.open-meteo.com/v1/forecast?latitude=" + latitude + "&longitude=" + longitude + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&timezone=auto")
 
                 .then(function (response) {
                     if (!response.ok) {
@@ -108,6 +108,87 @@ function getWeather(city) {
                     document.getElementById("weatherCondition").innerHTML = condition;
                     document.getElementById("weatherDescription").innerHTML = description;
                     document.getElementById("weatherIcon").innerHTML = icon;
+
+
+                    const hourlyTime = data.hourly.time;
+                    const hourlyTemperature = data.hourly.temperature_2m;
+                    const hourlyWeatherCode = data.hourly.weather_code;
+
+                    let currentIndex = hourlyTime.indexOf(data.current.time);
+
+                    if (currentIndex == -1) {
+                        currentIndex = 0;
+                    }
+
+                    let hourlyHTML = "";
+
+                    for (let i = currentIndex; i < currentIndex + 4; i++) {
+
+                        const time = hourlyTime[i];
+                        const temperature = hourlyTemperature[i];
+                        const weatherCode = hourlyWeatherCode[i];
+
+                        let hour = Number(time.split("T")[1].split(":")[0]);
+                        let displayTime = "";
+
+                        if (i == currentIndex) {
+                            displayTime = "Now";
+                        } else {
+
+                            let period = "AM";
+
+                            if (hour >= 12) {
+                                period = "PM";
+                            }
+
+                            let displayHour = hour % 12;
+
+                            if (displayHour == 0) {
+                                displayHour = 12;
+                            }
+
+                            displayTime = displayHour + " " + period;
+                        }
+
+                        let hourlyIcon = "🌤️";
+
+                        if (weatherCode == 0) {
+                            hourlyIcon = "☀️";
+
+                        } else if (weatherCode == 1 || weatherCode == 2) {
+                            hourlyIcon = "🌤️";
+
+                        } else if (weatherCode == 3) {
+                            hourlyIcon = "☁️";
+
+                        } else if (weatherCode == 45 || weatherCode == 48) {
+                            hourlyIcon = "🌫️";
+
+                        } else if (weatherCode >= 51 && weatherCode <= 67) {
+                            hourlyIcon = "🌧️";
+
+                        } else if (weatherCode >= 71 && weatherCode <= 77) {
+                            hourlyIcon = "❄️";
+
+                        } else if (weatherCode >= 80 && weatherCode <= 82) {
+                            hourlyIcon = "🌧️";
+
+                        } else if (weatherCode == 85 || weatherCode == 86) {
+                            hourlyIcon = "❄️";
+
+                        } else if (weatherCode >= 95 && weatherCode <= 99) {
+                            hourlyIcon = "⛈️";
+                        }
+
+                    hourlyHTML += `<div class="col-3">
+                        <p>${displayTime}</p>
+                        <h3>${hourlyIcon}</h3>
+                        <h5>${temperature}°C</h5>
+                    </div>`;
+                    }
+
+                    document.getElementById("hourlyForecast").innerHTML = hourlyHTML;
+
 
                     console.log(data);
                 });
