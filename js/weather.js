@@ -180,10 +180,7 @@ function getWeather(city) {
             // 5-Day Forecast
             const dailyData = data.forecast.forecastday;
 
-            const dayNames = [
-                "Sunday", "Monday", "Tuesday",
-                "Wednesday", "Thursday", "Friday", "Saturday"
-            ];
+            const dayNames = ["Sunday", "Monday", "Tuesday","Wednesday", "Thursday", "Friday", "Saturday"];
 
             let dailyHTML = "";
 
@@ -193,11 +190,7 @@ function getWeather(city) {
 
                 const dateParts = dayData.date.split("-");
 
-                const date = new Date(
-                    Number(dateParts[0]),
-                    Number(dateParts[1]) - 1,
-                    Number(dateParts[2])
-                );
+                const date = new Date( Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
 
                 const dayName = dayNames[date.getDay()];
 
