@@ -1,74 +1,70 @@
-# 🌤️ WeatherC – Weather Forecast Web Application
+# 🌤️ WeatherC – Weather Forecast App
 
-WeatherC is a simple and responsive weather forecast web application that allows users to search for locations worldwide and view current weather conditions and forecasts.
+WeatherC is a simple and responsive weather forecast web application that allows users to check current weather conditions and forecast information for different locations.
 
-## 🚀 Live Demo
+## 🌍 Live Demo
 
-[Visit WeatherC Live Website](https://chandikagihan2.github.io/WeatherC/)
+[Open WeatherC App](https://chandikagihan2.github.io/WeatherC/)
 
-## 📌 Features
+## ✨ Features
 
-- 🌍 Search weather information for worldwide locations
-- 🌡️ Display current temperature
-- ☀️ Show weather conditions and descriptions
-- 💧 Display humidity
-- 💨 Display wind speed
-- 🌡️ Show feels-like temperature
-- 🕒 Hourly weather forecast
-- 📅 5-day weather forecast
-- 🌅 Sunrise and sunset times
-- 📆 Automatically updated current date
-- 📱 Responsive user interface
+- Search weather information by city name
+- Display current weather conditions
+- Show temperature and feels-like temperature
+- Display humidity and wind speed
+- Show hourly weather forecast
+- Display 5-day weather forecast
+- Show sunrise and sunset times
+- Weather condition icons and descriptions
+- Responsive user interface
 
 ## 🛠️ Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript
-- Bootstrap 5
-- Open-Meteo Weather API
-- OpenStreetMap / Nominatim Geocoding API
+- Bootstrap 5.3.3
 
-## 📂 Project Structure
+## 🌐 API Used
+
+**WeatherAPI.com**
+
+WeatherC uses WeatherAPI.com to retrieve:
+
+- Current weather data
+- Hourly forecast data
+- 5-day forecast data
+- Sunrise and sunset information
+
+API Website: https://www.weatherapi.com/
+
+## 📁 Project Structure
 
 ```text
 WeatherC/
 │
 ├── index.html
+├── README.md
 │
 ├── css/
 │   └── style.css
 │
-├── js/
-│   ├── script.js
-│   └── weather.js
-│
-└── README.md
+└── js/
+    ├── script.js
+    └── weather.js
 ```
 
-## 🌐 APIs Used
-
-**1. Open-Meteo API**
-
-Used to retrieve current weather information, hourly forecasts, daily forecasts, sunrise and sunset times.
-
-Website: https://open-meteo.com/
-
-**2. OpenStreetMap Nominatim API**
-
-Used to search for locations and retrieve geographical coordinates.
-
-Website: https://nominatim.org/
-
-## ⚙️ How to Run the Project
+## 🚀 How to Run the Project
 
 1. Clone or download this repository.
-2. Open the project folder.
-3. Open `index.html` in a web browser.
-4. Enter a city or location name.
-5. Click the Search button to view weather information.
+2. Open the project folder in Visual Studio Code.
+3. Create an API key from WeatherAPI.com.
+4. Add your API key to the `weather.js` file.
+5. Open `index.html` using Live Server.
 
-An internet connection is required to retrieve weather and location data.
+## 🎯 Project Purpose
+
+This project was developed to improve my practical knowledge of web development, JavaScript, API integration, and responsive web design.
 
 ## 👨‍💻 Developer
 
@@ -76,12 +72,6 @@ An internet connection is required to retrieve weather and location data.
 
 GitHub: [@chandikagihan2](https://github.com/chandikagihan2)
 
-## 📄 License
-
-This project was developed for educational and learning purposes.
-
 ---
 
-⭐ If you find this project useful, feel free to explore the repository!
-
-**WeatherC – Connected to Your Sky 🌤️**
+© 2026 WeatherC. All Rights Reserved.
